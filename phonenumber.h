@@ -2,7 +2,22 @@
 extern "C" {
 #endif
 
-int isPossibleNumber(char* number, char* region);
+// Phone info related
+struct phone_info {
+  char* number;
+  char* normalized;
+  char* error;
+  int valid;
+};
+struct phone_info * new_phone_info(char*);
+void free_phone_info(struct phone_info*);
+
+// helpers
+char* allocAndCopyStr(const char* src);
+
+// Public api
+int is_possible_number(char* number, char* region);
+struct phone_info * parse(char* number, char* region);
 
 #ifdef __cplusplus
 }
