@@ -1,6 +1,7 @@
-# ICU4C_VERSION = 57.1
-
 .PHONY: test build
 
 build:
-		go build .
+	go build .
+
+test:
+	go test -race -timeout 10s .
