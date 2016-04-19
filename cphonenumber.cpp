@@ -10,5 +10,5 @@ int isPossibleNumber(char* number, char* region) {
   string numStr(number);
   string regionStr(region);
 
-  return phone_util.IsPossibleNumberForString(numStr, regionStr) ? 1 : 0;
+  return (phone_util.IsPossibleNumberForString(numStr, regionStr) ? 1 : 0);
 }
