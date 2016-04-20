@@ -1,6 +1,7 @@
 package phonenumber
 
 import (
+	"encoding/json"
 	"runtime"
 	"testing"
 )
@@ -34,7 +35,7 @@ func TestParse(t *testing.T) {
 	if res.Number != "+358401231234" {
 		t.Error("Did not set original number")
 	}
-	if res.Normalized != "+358401231234" {
+	if *res.Normalized != "+358401231234" {
 		t.Error("Did not normalize number")
 	}
 	if res.Error != nil {
@@ -48,7 +49,7 @@ func TestParse(t *testing.T) {
 	if res.Number != "+358-40-123 1234" {
 		t.Error("Did not set original number")
 	}
-	if res.Normalized != "+358401231234" {
+	if *res.Normalized != "+358401231234" {
 		t.Error("Did not normalize number")
 	}
 	if res.Error != nil {
@@ -62,11 +63,54 @@ func TestParse(t *testing.T) {
 	if res.Number != "acdegwerigh qepgj fqwpeg" {
 		t.Error("Did not set original number")
 	}
-	if res.Normalized != "" {
+	if res.Normalized != nil {
 		t.Error("Should not normalize number")
 	}
 	if res.Error == nil {
 		t.Error("Did not get error when expected")
 	}
 	runtime.GC()
+}
+
+func TestJSONMarshal(t *testing.T) {
+	info := PhoneNumber{
+		Valid:      false,
+		Error:      NewError("decoding failed"),
+		Number:     "abadogjwprj",
+		Normalized: nil,
+	}
+	data, err := json.Marshal(info)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(data))
+	parsedInfo := PhoneNumber{}
+	err = json.Unmarshal(data, &parsedInfo)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if info.Valid != parsedInfo.Valid || info.Error.Error() != parsedInfo.Error.Error() || info.Number != parsedInfo.Number || parsedInfo.Normalized != nil {
+		t.Error("Marshaled and unmarshaled structs don't match.")
+	}
+
+	normalized := "+358401231234"
+	info = PhoneNumber{
+		Valid:      true,
+		Error:      nil,
+		Number:     "+358 40 123 1234",
+		Normalized: &normalized,
+	}
+	data, err = json.Marshal(info)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(data))
+	parsedInfo = PhoneNumber{}
+	err = json.Unmarshal(data, &parsedInfo)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if info.Valid != parsedInfo.Valid || parsedInfo.Error != nil || info.Number != parsedInfo.Number || *info.Normalized != *parsedInfo.Normalized {
+		t.Error("Marshaled and unmarshaled structs don't match.")
+	}
 }
