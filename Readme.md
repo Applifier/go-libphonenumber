@@ -4,10 +4,11 @@ This is a lightweight wrapper for some of the functionality provided by [libphon
 
 ## Requirements
 
-You'll need to install `libphonenumber` from your OS's package manager:
+You'll need to install `libphonenumber`:
 
 - OSX: `brew install libphonenumber`
-- Debian / ubuntu: `apt-get install libphonenumber`
+- Debian: `apt-get install libphonenumber6 libphonenumber6-dev`
+- Others: see instructions at the [repo](https://github.com/googlei18n/libphonenumber/tree/master/cpp).
 
 ## Licence
 
