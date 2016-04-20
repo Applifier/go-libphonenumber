@@ -18,10 +18,14 @@ import (
 
 // PhoneNumber stores information about a number
 type PhoneNumber struct {
-	Number     string `json:"number"`
+	// Original number given to the function
+	Number string `json:"number"`
+	// Number in normalized format (E164)
 	Normalized string `json:"normalized"`
-	Error      error  `json:"error"`
-	Valid      bool   `json:"valid"`
+	// Any error given
+	Error error `json:"error"`
+	// If the number was valid in the first place
+	Valid bool `json:"valid"`
 }
 
 func phoneNumberInfoFromCStruct(info *C.struct_phone_info) PhoneNumber {
@@ -43,7 +47,7 @@ func phoneNumberInfoFromCStruct(info *C.struct_phone_info) PhoneNumber {
 	return pn
 }
 
-// IsPossibleNumber quickly guessing whether a number is a possible phonenumber by using only the length information, much faster than a full validation.
+// IsPossibleNumber can be used for quickly guessing whether a number is a possible phonenumber by using only the length information, much faster than a full validation.
 func IsPossibleNumber(number, region string) bool {
 	cNum := C.CString(number)
 	defer C.free(unsafe.Pointer(cNum))
