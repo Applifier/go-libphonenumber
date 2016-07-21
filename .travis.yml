@@ -5,6 +5,7 @@ go:
 notifications:
   email: false
 before_install:
+- go get -u github.com/golang/lint/golint
 - scripts/install_libphonenumber.sh
 install: true
 script:
