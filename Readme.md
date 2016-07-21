@@ -1,5 +1,7 @@
 # Go-libphonenumber
 
+[![Build Status](https://travis-ci.org/Applifier/go-libphonenumber.svg?branch=master)](https://travis-ci.org/Applifier/go-libphonenumber)
+
 This is a lightweight wrapper for some of the functionality provided by [libphonenumber](https://github.com/googlei18n/libphonenumber).
 
 ## Requirements
