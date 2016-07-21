@@ -1,0 +1,19 @@
+language: go
+sudo: true
+go:
+- 1.6
+notifications:
+  email: false
+before_install:
+- scripts/install_libphonenumber.sh
+install: true
+script:
+- make test
+- make vet
+- make lint
+env:
+  global:
+  - CC=clang
+  - CXX=clang++
+  - LIBPHONENUMBER_VERSION=7.3.0
+  - CGO_CPPFLAGS="-v"
