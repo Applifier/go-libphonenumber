@@ -2,7 +2,7 @@ package phonenumber
 
 /*
 #cgo CPPFLAGS: -I/usr/local/include
-#cgo CPPFLAGS: -Wall -Werror
+#cgo CPPFLAGS: -Wall -Werror -Wno-deprecated-declarations
 #cgo LDFLAGS: -L/usr/local/lib
 #cgo LDFLAGS: -lphonenumber
 
