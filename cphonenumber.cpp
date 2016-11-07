@@ -11,7 +11,22 @@ int is_possible_number(char* number, char* region) {
   string numStr(number);
   string regionStr(region);
 
-  return (phone_util.IsPossibleNumberForString(numStr, regionStr) ? 1 : 0);
+  bool isPossible = phone_util.IsPossibleNumberForString(numStr, regionStr);
+  return (isPossible ? 1 : 0);
+}
+
+char* get_country_code(char* number) {
+  string numStr(number);
+  string defaultRegion("ZZ");
+  PhoneNumber parsedNumber;
+
+  PhoneNumberUtil::ErrorType error = phone_util.Parse(numStr, defaultRegion, &parsedNumber);
+  if (error != PhoneNumberUtil::NO_PARSING_ERROR) {
+    return NULL;
+  }
+  string regionCode;
+  phone_util.GetRegionCodeForNumber(parsedNumber, &regionCode);
+  return allocAndCopyStr(regionCode.c_str());
 }
 
 struct phone_info* parse(char* number, char* region) {
